@@ -23,11 +23,21 @@ while True:
     # Detect faces
     # No matter size of face it will detect (multi scale)
     face_coordinates = trained_face_data.detectMultiScale(grayscaled_frame)
+    
+    # scalefactor is how much you want to blur image (therefore less data in image, easier to detect smile)
+    # minNeighbors is how many rectangles need to be in the area for it to be a smile,
+    # this is good with dealing with overlapping smiles (many squares in one area)
 
+    smile_coordinates = trained_smile_data.detectMultiScale(grayscaled_frame, scaleFactor=1,
+    minNeighbors = 20)
 
     for (x, y, w, h) in face_coordinates:
 
         cv2.rectangle(frame, (x,y), (x+w, y+h), (0, 0, 255), 5)
+
+    for (x, y, w, h) in smile_coordinates:
+
+        cv2.rectangle(frame, (x,y), (x+w, y+h), (0, 255, 0), 5)
 
     # Show Frame
     cv2.imshow('Programming Face Detector', frame)
