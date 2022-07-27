@@ -45,11 +45,16 @@ while True:
         # this is good with dealing with overlapping smiles (many squares in one area)
         smile_coordinates = trained_smile_data.detectMultiScale(grayscaled_face, scaleFactor=1.7, minNeighbors=20)
 
-        for (xs, ys, ws, hs) in smile_coordinates:
+        #for (xs, ys, ws, hs) in smile_coordinates:
 
-            cv2.rectangle(face, (xs,ys), (xs+ws, ys+hs), (0, 255, 0), 5)
+            #cv2.rectangle(face, (xs,ys), (xs+ws, ys+hs), (0, 255, 0), 5)
             #break so it only prints one rectangle per face
-            break
+            #break
+
+        # Label face as smiling
+        if len(smile_coordinates) > 0:
+            cv2.putText(frame, 'Smile Detected!', (x, y+h+40), fontScale=3, 
+            fontFace=cv2.FONT_HERSHEY_PLAIN, color=(0, 255, 0))
 
     # Show Frame
     cv2.imshow('Programming Face Detector', frame)
